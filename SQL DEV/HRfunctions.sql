@@ -1,0 +1,20 @@
+-- PLSQL FUNCTION ORACLE DATABASE
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION area_circle(radius NUMBER)
+RETURN NUMBER IS
+pi CONSTANT NUMBER(7,3) := 3.14;
+area NUMBER(7,3);
+BEGIN
+   -- AREA OF THE CIRCLE PI * R * R
+   area := pi * (radius * radius);
+   RETURN area;
+END;
+/
+-- EXCUTION OF FUNCTION
+DECLARE
+  v_area NUMBER(9,2);
+BEGIN
+  v_area := area_circle(25);
+ DBMS_OUTPUT.PUT_LINE(v_area);
+END;
+/

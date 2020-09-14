@@ -1,0 +1,21 @@
+SELECT * FROM SYS.database_properties ;
+
+
+-- SmallFile tablespace
+CREATE SMALLFILE TABLESPACE  rebellionrider
+DATAFILE
+     'C:\app\tbsp_demo\rebel1.dbf' SIZE 100M,
+     'C:\app\tbsp_demo\rebel3.dbf' SIZE 100M
+LOGGING
+EXTENT MANAGEMENT LOCAL UNIFORM SIZE 100M
+SEGMENT SPACE MANAGEMENT AUTO;
+
+CREATE BIGFILE TABLESPACE rebellionrider2
+DATAFILE
+    'C:\app\tbsp_demo\rebel_bf1.dbf' SIZE 1G
+LOGGING
+EXTENT MANAGEMENT LOCAL 
+SEGMENT SPACE MANAGEMENT AUTO ;
+
+
+

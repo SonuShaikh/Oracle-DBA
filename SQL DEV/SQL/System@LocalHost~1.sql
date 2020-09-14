@@ -1,0 +1,56 @@
+-- TRIGGER
+CREATE TABLE superheros 
+( 
+   sh_name VARCHAR2(20)
+   );
+CREATE OR REPLACE TRIGGER bi_superheros
+BEFORE INSERT ON SUPERHEROS
+FOR EACH ROW
+ENABLE
+DECLARE
+v_user VARCHAR2(20);
+BEGIN
+select user into v_user from dual;
+DBMS_OUTPUT.PUT_LINE('YOU HAVE JUST INSERTED ONE ROW MR.'||v_user);
+END;
+/
+INSERT INTO SUPERHEROS VALUES('SALMAN KHAN');
+
+
+
+
+
+
+
+CREATE OR REPLACE TRIGGER bu_superheros
+BEFORE UPDATE ON SUPERHEROS
+FOR EACH ROW
+ENABLE
+DECLARE
+v_user VARCHAR2(20);
+BEGIN
+ select user INTO v_user from DUAL;
+ DBMS_OUTPUT.PUT_LINE('YOU HAVE JUST UPDATED ONE LINE MR.'|| v_user);
+ END;
+ /
+ UPDATE SUPERHEROS set sh_name = 'sonu' WHERE sh_name = 'SALMAN KHAN';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+-- DISPLAY ALL BIND VAR PRIVIOUSLY DEFIND. 
+VARIABLE;
+--DECLARATION OF BIND VARIABLE. 
+VARIABLE v_bind VARCHAR2(10);
+VARIABLE v_bind1 NUMBER;
+
+-- TO KNOW DEFENATION OF BIND VARIABLE.
+VARIABLE v_bind1;
+
+-- INITILIZATION OF BIND VARIABLE
+EXECUTE :v_bin
+d := 'Sonu Sk';
+EXEC :v_bind1 := 12365478;
+
+-- 2nd WAY.
+BEGIN 
+  :v_bind := 'Think Different.';
+END;
+/
+
+-- HOW TO DISPLY VALUE OF BIND VAIRABLE
+-- WAY 1
+PRINT :v_bind;
+
+--WAY 2
+SET SERVEROUTPUT ON;
+BEGIN
+    :v_bind := 'inside the anonommus block.';
+    DBMS_OUTPUT.PUT_LINE(:v_bind);
+END;
+/
+
+-- WAY 3
+SET AUTOPRINT ON;
+VARIABLE v_bind2 VARCHAR2(20);
+
+EXECUTE :v_bind2 := 'HP NoteBook.';
+
+

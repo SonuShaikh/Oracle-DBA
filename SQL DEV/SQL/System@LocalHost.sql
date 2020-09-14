@@ -1,0 +1,117 @@
+DESC SUPERHEROS;
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE TRIGGER bi_superheros
+BEFORE INSERT ON superheros
+FOR EACH ROW 
+ENABLE
+DECLARE
+v_user VARCHAR2(20);
+BEGIN
+select user INTO v_user from DUAL;
+DBMS_OUTPUT.PUT_LINE('YOU HAVE JUST INSERTED  ONNE ROW MR.'|| v_user);
+END;
+/
+insert into superheros values ('IRON MAN');
+
+
+CREATE OR REPLACE TRIGGER bu_superheros
+BEFORE UPDATE ON superheros
+FOR EACH ROW
+ENABLE 
+DECLARE
+v_user VARCHAR2(20);
+BEGIN
+SELECT USER INTO v_user FROM DUAL;
+DBMS_OUTPUT.PUT_LINE('YOU HAVE JUST UPDATED ON LINE MR.'|| v_user);
+END ;
+/
+
+
+UPDATE SUPERHEROS SET SH_NAME = 'SPIDER MAN' WHERE SH_NAME = 'IRON MAN';
+
+
+
+CREATE OR REPLACE TRIGGER bd_superheros
+BEFORE DELETE ON superheros
+FOR EACH ROW
+ENABLE
+DECLARE
+v_user VARCHAR2(20);
+BEGIN
+select user into v_user from dual;
+DBMS_OUTPUT.PUT_LINE('YOU HAVE JUST DELETED ONE ROW MR.'||v_user);
+END;
+/
+DELETE FROM SUPERHEROS WHERE SH_NAME = 'SPIDER MAN';
+
+DROP TRIGGER bD_superheros;
+
+
+CREATE OR REPLACE TRIGGER superheros
+BEFORE INSERT OR DELETE OR UPDATE ON superheros
+FOR EACH ROW
+ENABLE
+DECLARE 
+v_user VARCHAR2(20);
+BEGIN
+select user into v_user from dual;
+IF INSERTING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW INSERETED BY USER '||v_user);
+ELSIF DELETING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW DELETED BY USER '||v_user);
+ELSIF UPDATING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW UPDATED BY USER '||v_user);
+END IF;
+END;
+/
+
+INSERT INTO SUPERHEROS VALUES('X MAN');
+UPDATE SUPERHEROS SET SH_NAME = 'JAWED PATHAN' WHERE SH_NAME = 'X MAN';
+
+
+CREATE TABLE SUPERHEROS 
+( 
+SH_NAME VARCHAR2(20));
+DROP TABLE SUPERHEROS;
+
+
+
+delete from superheros where sh_name = 'JAWED PATHAN' ;
+
+
+CREATE TABLE SH_AUDIT
+(
+ New_name VARCHAR2(30),
+ Old_name VARCHAR2(30),
+ User_name VARCHAR2(30),
+ Entry_date VARCHAR2(30),
+ Operation VARCHAR2(30)
+ );
+ /
+ 
+ 
+ SET SERVEROUPUT ON;
+ CREATE OR REPLACE TRIGGER superheros_Audit
+ BEFORE INSERT OR DELETE OR UPDATE ON superheros
+ FOR EACH ROW
+ ENABLE
+ DECLARE
+ v_user VARCHAR2(30);
+ v_date VARCHAR2(30);
+ BEGIN
+ SELECT USER, TO_CHAR(SYSDATE,'DD/MON/YYYY HH24:MI:SS' ) INTO v_user, v_date from DUAL;
+ IF INSERTING THEN
+   insert into sh_audit(new_name,old_name,user_name,entry_date,operation)
+   VALUES(:NEW.sh_name, NULL,v_user,v_date,'Inserting');
+ ELSIF DELETING THEN
+   INSERT INTO sh_audit(new_name, old_name,user_name,entry_date,operation)
+   (NULL, :OLD.sh_name,v_user,v_date,'Deleting');
+ ELSIF UPDATING THEN
+   INSERT INTO sh_audit(new_name,old_name,user_name,entry_date,operation)
+   VALUES(:NEW.sh_name,:OLD.sh_name,v_user,v_date,'UPDATING');
+  END IF;
+  END;
+  /
+  
+  
+  INSERT INTO SUPERHEROS VALUES('SUPER MAN');

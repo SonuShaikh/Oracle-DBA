@@ -1,0 +1,90 @@
+-- PL-SQL BLOCK 
+-- DECLARARION OF THE VARIABL IN PLSQL
+SET SERVEROUTPUT ON;
+DECLARE
+   v_test VARCHAR2(20);
+BEGIN
+   v_test := 'ProgrammerNeverDie';
+   DBMS_OUTPUT.PUT_LINE(v_test);
+END;
+/ 
+-- END OF THE ANONOMUS BLOCK
+
+-- SELECTING VARIABLE VALUE FROM TABLE
+SET SERVEROUTPUT ON;
+DECLARE
+   v_salary NUMBER(10);
+BEGIN
+   SELECT salary INTO v_salary FROM employees WHERE employee_id = 100;
+   DBMS_OUTPUT.PUT_LINE(v_salary);
+END;
+/
+-- SELECTING VALUE FROM MULTIPLE COLUMNS
+DECLARE 
+   v_name VARCHAR2(25);
+   v_salary NUMBER(10);
+BEGIN
+   SELECT first_name , salary INTO  v_name, v_salary FROM employees WHERE employee_id = 100;
+   DBMS_OUTPUT.PUT_LINE(v_name ||' has salary '||v_salary);
+END;
+/
+
+-- INTRODUCTION TO THE 'ANCHOR DATA TYPE'
+-- SYNTAX
+--       variable_name table_name.colomn_name%type;
+DECLARE
+     v_name students.first_name%type;
+BEGIN
+     SELECT first_name INTO v_name FROM STUDENTS WHERE st_id = 1;
+     DBMS_OUTPUT.PUT_LINE(v_name);
+END;
+/
+
+-- CONSTANT IN PL-SQL
+DECLARE
+     v_pi CONSTANT NUMBER(7,6)  := 3.14;
+BEGIN
+     DBMS_OUTPUT.PUT_LINE(v_pi);
+END;
+/
+
+-- CONSTAN WITH 'DEFAULT' KEY WORD;
+DECLARE
+     v_pi CONSTANT NUMBER(7,6) DEFAULT 3.14;
+     v_sonu CONSTANT NUMBER(10) NOT NULL DEFAULT 9623858600;
+     v_shaikh CONSTANT NUMBER(5) NOT NULL := 12345;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE(v_pi);
+   DBMS_OUTPUT.PUT_LINE(v_sonu);
+   DBMS_OUTPUT.PUT_LINE(v_shaikh);
+END;
+/
+
+
+-- BIND VARIABLE
+-- 1 DECLARE THE BIND VARIABLE
+VARIABLE v_bind1 VARCHAR2(20);
+-- INITIALIZATION OF BIND VARIABLE
+EXECUTE :v_bind1 := 'Sonu Shaikh';
+--2nd way to initialize the bind varialble
+SET SERVEROUTPUT ON;
+BEGIN
+     :v_bind1 :='Anita Dapke';
+     DBMS_OUTPUT.PUT_LINE(:v_bind1); -- DISPLAYING THE BIND VARIALBE
+END;
+/
+-- 2ND WAY TO DISPLAYING BIND VARIALBLE
+PRINT :v_bind1;
+-- 3RD WAY TO DISPLAYING THE BIND VARIALBLE
+SET AUTOPRINT ON;
+VARIABLE v_name VARCHAR2(20);
+EXEC :v_name := 'Sonu Shaikh';
+
+
+
+
+
+
+
+
+
